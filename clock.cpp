@@ -1,52 +1,90 @@
+#include <iostream>
 #include "clock.h"
 
-Jam MakeJam(int H, int M, int S)
+using namespace std;
+
+bool IsValid (int hh, int mm, int ss)
 {
-   Jam J1;
-   Hour(J1) = H;
-   Minute(J1) = M;
-   Second(J1) = S;
-   return J1;
+    if(((hh>=0 && hh<=23) && (mm>=0 && mm<=59)) && ((ss>=0)&&(ss<=59)))
+        return true;
+    else
+        return false;
 }
 
-boolean IsJValid(int H, int M, int S)
-
+clock MakeClock( int hh, int mm, int ss)
 {
-   return ((H >= 0 && H <= 23) && (M >= 0 && M <= 59) && (S >= 0 && S <= 59));
+    clock c;
+    c.hh.h = hh; 
+	c.mm.m = mm; 
+	c.ss.s = ss;
+    return c;
 }
 
-void BacaJam(Jam *J)
-
+hour GetHour(clock c)
 {
-   int H, M, S;
-   do {
-       printf("Masukkan jam : ");scanf("%d",&H);
-       printf("Masukkan menit : ");scanf("%d",&M);
-       printf("Masukkan detik : ");scanf("%d",&S);
-      } while(!IsJValid(H,M,S));
-   *J = MakeJam(H,M,S);
+    return c.hh;
 }
 
-void TulisJam(Jam J)
-
-{ 
-   printf("%d:%d:%d",Hour(J),Minute(J),Second(J));
+minute GetMinute (clock c)
+{
+    return c.mm;
 }
 
-int JamToDetik(Jam J)
-
-{ 
-   return(3600 *Hour(J) + 60 *Minute(J) + Second(J));
+second GetSecond (clock c)
+{
+    return c.ss;
 }
 
-Jam DetikToJam(int N)
+void SetHour (clock c, hour newHH)
+{
+    c.hh= newHH;
+}
 
-{ 
-   int sisa;
-   Jam JOut;
-   Hour(JOut) = N / 3600;
-   sisa = N % 3600;
-   Minute(JOut) = sisa / 60;
-   Second(JOut) = sisa % 60;
-   return JOut;
+void SetMinute(clock c, minute newMM)
+{
+    c.mm = newMM;
+}
+
+void SetSecond(clock c, second newSS)
+{
+    c.ss = newSS;
+}
+
+clock AddClock (clock c1, clock c2)
+{
+    clock sisa;
+    if ((c1.ss.s+c2.ss.s) >=60)
+    {
+        sisa.ss.s = (c1.ss.s+c2.ss.s) - 60;
+        sisa.mm.m = 1;
+    }
+    else
+    {
+        sisa.ss.s = c1.ss.s+c2.ss.s;
+    }
+
+    if ((c1.mm.m+c2.mm.m) >=60)
+    {
+        sisa.mm.m = (sisa.mm.m+c1.mm.m+c2.mm.m) - 60;
+        sisa.hh.h = 1;
+    }
+    else
+    {
+        sisa.mm.m = c1.mm.m+c2.mm.m;
+    }
+
+    if (c1.hh.h+c2.hh.h >=24)
+    {
+        sisa.hh.h = (sisa.hh.h+c1.hh.h+c2.hh.h) - 60;
+    }
+    else
+    {
+        sisa.hh.h = c1.hh.h+c2.hh.h;
+    }
+    return sisa;
+}
+
+void PrintClock (clock c)
+{
+    cout<<c.hh.h<<" : "<<c.mm.m<<" : "<<c.ss.s<<endl;
 }
