@@ -1,28 +1,43 @@
-#ifndef clock_H
-#define clock_H
-#include "boolean.h"
-#include "stdio.h"
+#ifndef CLOCK_H_INCLUDED
+#define CLOCK_H_INCLUDED
+#include <iostream>
+#include <cstdlib>
+#include <stdlib.h>
 
-#define Hour(J) (J).HH
-#define Minute(J) (J).MM
-#define Second(J) (J).SS
-typedef struct 
+//#include <clock.h>
+
+struct hour
 {
- int HH; 
- int MM;
- int SS;
-} Jam;
+    int h;
+};
+struct minute{
+int m;
+};
+struct second{
+int s;
+};
 
-Jam MakeJam(int H, int M, int S);
+struct clock
+{
+    hour hh;
+    minute mm;
+    second ss;
+};
 
-boolean IsJValid(int H, int M, int S);
+bool IsValid (int hh, int mm, int ss);
 
-void BacaJam(Jam *J);
+clock MakeClock (int hh, int mm, int ss);
 
-void TulisJam(Jam J);
+hour GetHour(clock c);
+minute GetMinute (clock c);
+second GetSecond (clock c);
 
-int JamToDetik(Jam J);
+void SetHour (clock c, int newHH);
+void SetMinute(clock c, int newMM);
+void SetSecond(clock c, int newSS);
 
-Jam DetikToJam(int N);
+clock AddClock (clock c1, clock c2);
+
+void PrintClock (clock c);
 
 #endif
