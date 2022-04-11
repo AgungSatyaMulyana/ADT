@@ -1,14 +1,17 @@
 #include "clock.h"
+using namespace std;
 
-int main()
-{ 
-   Jam J1, J2;
-   BacaJam(&J1);
-   printf("Jam sekarang: ");
-   TulisJam(J1); printf("\n");
-   printf("Konversi menjadi detik: %d\n",JamToDetik(J1));
-   J2 = DetikToJam(5000);
-   printf("5000 detik sama dengan jam : ");
-   TulisJam(J2);
-   return 0;
-}
+ int main()
+ {
+    clock c1 = MakeClock(2,30,4);
+    clock c2 = MakeClock(6,0,0);
+    clock sisa = MakeClock(1,62,30);
+
+    PrintClock(c1);
+    PrintClock(c2);
+
+    sisa = AddClock(c1, c2);
+    PrintClock(sisa);
+
+    return 0;
+ }
